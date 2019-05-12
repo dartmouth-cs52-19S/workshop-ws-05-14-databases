@@ -58,7 +58,7 @@ Here are some other commands:
 We know, isn't this amazing.
 Here's how Zac felt when he learned how to use PostgreSQL
 
-![](https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif)
+<img src="https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif">
 
 ## Create a User and Log in
 We're gonna create a role called `me` (or whatever you wish) and give it a password `password` (or whatever you wish). According to the PostgreSQL documentation, "a role is an entity that can own database objects and have database privileges; a role can be considered a 'user', a 'group' or both depending on how it is used." In this case, we'll be using a role as a user. Run the following command:
