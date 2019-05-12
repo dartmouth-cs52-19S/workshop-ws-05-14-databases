@@ -439,6 +439,8 @@ where: { authorId: req.params.id },
 
 Pretty cool, right? 
 
+![](https://media.giphy.com/media/BT2PJHeQfTCb6/giphy.gif)
+
 ### Add more polls
 Navigate into `src/polls.js`. You'll see we've already created some polls for you. 
 
