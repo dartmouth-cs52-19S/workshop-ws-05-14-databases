@@ -584,7 +584,7 @@ postgres=# \du
 Cool. Quit psql with `\q`.
 
 :rocket: Now, let's download pgAdmin 4 from this website <https://www.pgadmin.org/download/>.
-If you're on a Mac, you can download it straight from ![here](https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.6/macos/pgadmin4-4.6.dmg).
+If you're on a Mac, you can download it straight from [here](https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v4.6/macos/pgadmin4-4.6.dmg).
 
 :rocket: Install it (drop into Applications folder) and try running it.
 
@@ -614,7 +614,6 @@ Here you have two tables, as we have two models! Sequelize can create a bunch mo
 
 ![](img/pgadmin2.png)
 
-
 :rocket: Now you can run some queries!
 
 For e.g. you can run `SELECT * from public.polls;` Run it by clickin' the little bolt icon or pressing F5.
@@ -624,7 +623,7 @@ For e.g. you can run `SELECT * from public.polls;` Run it by clickin' the little
 
 That's it! Play around with some SQL queries like `SELECT * from public.polls ORDER BY upvotes DESC;`.
 
-If you need some SQL guidelines, ![here's a quick intro](https://www.geeksforgeeks.org/structured-query-language/).
+If you need some SQL guidelines, [here's a quick intro](https://www.geeksforgeeks.org/structured-query-language/).
 
 Also while in `polls` or `authors` table, check out different pgAdmin tabs (on top). We think the `SQL` and `Statistics` ones are cool.
 
