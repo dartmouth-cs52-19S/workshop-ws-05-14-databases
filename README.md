@@ -2,7 +2,7 @@
 
 ![](https://media.giphy.com/media/xT5LMC67mF1yMpE6HK/giphy.gif)
 
-*Insert something here to hype em up about databases*
+*Dont't you want to know how to store your own data, other people's data, all kinds of data? When you read the word data, do you say data or data?????*
 *HYPE HYPE HYPE HYPE HYPE HYPE HYPE HYPE HYPE *
 
 ## Overview
