@@ -56,7 +56,7 @@ Here are some other commands:
 ```
 
 We know, isn't this amazing.
-Here's how Miho felt when he learned how to use PostgreSQL
+PostgreSQL got us all like...
 
 ![](https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif)
 
