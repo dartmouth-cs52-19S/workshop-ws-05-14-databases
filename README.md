@@ -8,7 +8,7 @@
 In this workshop, we're going to rebuild our SA7 assignment. In case you don't remember, that's the lab with polls and upvotes/downvotes. Instead of using MongoDB and Mongoose, we're going to use PostgreSQL and Sequelize! You will learn how to install PostgreSQL and work with it through the command line interface. Then, we'll use Sequelize, a promise-based ORM (Object Relation Mapping) for Node.js. 
 
 ## Setup
-### What the hell is PostgreSQL?
+### :sweat_drops:What the hell is PostgreSQL?:sweat_drops:
 We know our presentation about databases was interesting, and you probably know all about PostgreSQL now. But just in case you need a reminder, PostgreSQL (if you wanna impress your friends, call it Postgres) is an open source relational database management system. 
 
 ### Installing PostgresSQL
