@@ -450,18 +450,18 @@ Notice how `polls` was not a field in the model, but now it became one after the
 
 @Mihovil, this is the section for eraseDataOnSync.
 
-## Summary / What you Learned
+## Summary / What you Learned :clap:
 
 * [ ] Learned how to create your own relational database
 * [ ] Learned the differences between relational/non-relational databases
 * [ ] Basics of postgreSQL
 * [ ] Basics of sequelize
 
-## Extra Credit
+## Extra Credit :trollface:
 * Create a delete button on the output page and run a query to delete the posts by a specific author
 * Create a search bar and run a query to get all the post made by a specific author
 
-## Reflection
+## Reflection :question: :question:
 
  1. When would you use postgreSQL over mongoDB or firebase?
  2. What are the downsides of using a relational database? What are the main differences between a relational and non-relational database?
