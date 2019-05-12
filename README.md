@@ -240,6 +240,7 @@ Poll.associate = (models) => {
   };
 ```
 
+If you're really struggling, here's what the end result should be:
 <details>
   <summary>Click to expand!</summary>
   
@@ -282,7 +283,7 @@ Poll.associate = (models) => {
 
 ### Part 3 -- Setting up the API
 Now run `yarn dev` in terminal, then if you open up <http://localhost:9090/> in your browser, you should see the SA7 assignment. Now, let's fetch all the polls.
-
+@Miho add explanation as to whats happening in the code here for the eraseDatabaseOnSync method: 
 Open up `server.js` and add the following to the top:
 
 ```
@@ -301,6 +302,26 @@ sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
 #### Part 3.1 -- GET all the posts
 This is basically the same as it was when we did SA7 with MongoDB. The syntax is a bit different, and we're adding the author to the model. Beneath the 'PART 3.1' comment, add the following:
 
+```
+// default index route
+app.get('/', (req, res) => {
+  models.Poll.findAll({
+    
+  })
+    .then((polls) => {
+      res.render('index', { polls });
+    }).catch((error) => {
+      res.send(`error: ${error}`);
+    });
+});
+```
+
+We want to add the author to the model. In order to do that, paste this line in between the brackets of the findAll method.
+```
+include: [{ model: models.Author }],
+```
+
+Now we are getting all the posts from all of the authors included in each model.
 ```
 // default index route
 app.get('/', (req, res) => {
@@ -326,12 +347,23 @@ app.post('/new', (req, res) => {
     imageURL: req.body.imageURL,
   };
 
-  models.Poll.create(
+ 
+});
+```
+Add this block of code under newpoll and within app.post. We're doing the same thing as in part 3.1 and including the author in the newpoll that you create.
+```
+models.Poll.create(
     newpoll, {
       include: [{ model: models.Author }],
     },
-  )
-    .then((poll) => {
+  ).then((poll) => {
+  
+  
+    });
+```
+Next, add this block under .then((poll). Here, we are creating the `poll` object with the information from the form users can fill out. We then 'find or create' the author they provided and link it to the pool. @Miho might want to change our explanation here. we have no idea whats going on!!!!
+```
+.then((poll) => {
       models.Author.findOrCreate({ where: { name: req.body.author } })
         .then((author) => {
           poll.setAuthor(author[0]);
@@ -341,10 +373,9 @@ app.post('/new', (req, res) => {
           res.redirect('/');
         });
     });
-});
-```
 
-Here, we are creating the `poll` object with the information from the form users can fill out. We then 'find or create' the author they provided and link it to the pool. Finally, we redirect to the home page.
+```
+Finally, we redirect to the home page.
 
 #### Part 3.3 -- POST for votes
 
@@ -373,7 +404,6 @@ Now that we've created a relational database associating authors with posts, we 
 ```
 app.get('/author/:id', (req, res) => {
   models.Poll.findAll({
-    where: { authorId: req.params.id },
     include: [{ model: models.Author }],
   })
     .then((polls) => {
@@ -384,12 +414,35 @@ app.get('/author/:id', (req, res) => {
 });
 ```
 
-Here, we're requesting all the polls associated with a specific author with the line `where: { authorId: req.params.id },`. Pretty cool, right? 
+Here, we're requesting all the polls associated with a specific author with the line `where: { authorId: req.params.id },`:
+```
+where: { authorId: req.params.id },
+```
+<details>
+  <summary>Click to expand!</summary>
+  
+  So we have:
+  ```
+  app.get('/author/:id', (req, res) => {
+    models.Poll.findAll({
+      where: { authorId: req.params.id },
+      include: [{ model: models.Author }],
+    })
+      .then((polls) => {
+        res.render('index', { polls });
+      }).catch((error) => {
+        res.send(`error: ${error}`);
+      });
+  });
+  ```
+ </details>
+
+Pretty cool, right? 
 
 ### Add more polls
 Navigate into `src/polls.js`. You'll see we've already created some polls for you. 
 
-Notice how `polls` was not a field in the model, but now it became one after the 'associate' part. Sequelize pluralized it from poll to polls by itself! WOWOWOW. 
+Notice how `polls` was not a field in the model, but now it became one after the 'associate' part. Sequelize pluralized it from poll to polls by itself! WOWOWOW. ComputerSciencyyyy.
 
 ## Part 4: 
 
