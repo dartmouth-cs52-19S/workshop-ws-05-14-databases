@@ -644,6 +644,10 @@ Also while in `polls` or `authors` table, check out different pgAdmin tabs (on t
  1. When would you use postgreSQL over mongoDB or firebase?
  2. What are the downsides of using a relational database? What are the main differences between a relational and non-relational database?
 
+ ## Slides
+https://docs.google.com/presentation/d/135N0LlxpvDi1RCzaM-2bawaW82yWbCsNBO90cY460Ss/edit?usp=sharing
+
+
 ## Resources
 * <https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8>
 
