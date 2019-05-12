@@ -69,7 +69,7 @@ If you now run `\du`, you should see something like this:
  Role name |                         Attributes                         | Member of
 -----------+------------------------------------------------------------+-----------
  Tim       | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- me        | Create DB
+ me        | Create DB                                                  | {}
  ```
 
 Now, run `\q` to quit. You should now be in the default Terminal connection.
@@ -130,7 +130,7 @@ export default author;
 ```
 First, we've defined the `author` model. Notice, the name is unique; we can't have different users with the same name. 
 
-Next, we create an association by calling  `hasMany` providing the `poll` model as the first argument. We use `hasMany` because each author can write multiple polls. In creatin associations, you can also use `hasOne`, `belongsTo`, and `belongsToMany`. The documentation can be found here: <http://docs.sequelizejs.com/class/lib/associations/base.js~Association.html>
+Next, we create an association by calling  `hasMany` providing the `poll` model as the first argument. We use `hasMany` because each author can write multiple polls. In creating associations, you can also use `hasOne`, `belongsTo`, and `belongsToMany`. The documentation can be found here: <http://docs.sequelizejs.com/class/lib/associations/base.js~Association.html>
 
 #### Part 2.2 -- Poll Model
 
@@ -178,13 +178,13 @@ Here, we're doing the same thing we did with the `author` model. We're defining 
 Then, we associate the `poll` with an `author` using `associate` and `belongsTo`. 
 
 ### Part 3 -- Setting up the API
-If you open up <http://localhost:9090/> in your browser, you should see the SA7 assignment. Now, let's fetch all the polls.
+Now run `yarn dev` in terminal, then if you open up <http://localhost:9090/> in your browser, you should see the SA7 assignment. Now, let's fetch all the polls.
 
 Open up `server.js` and add the following to the top:
 
 ```
 import models, { sequelize } from './models';
-import createAuthorsWithPolls from './polls
+import createAuthorsWithPolls from './polls';
 
 // sync Sequelize
 const eraseDatabaseOnSync = true;
@@ -213,7 +213,6 @@ app.get('/', (req, res) => {
 ```
 
 #### Part 3.2 -- POST for new posts
-ssignment with some polls we left there for you. 
 
 Now, let's make it so our users can create new posts. Add the following below the 'PART 3.2' comment.
 
@@ -282,7 +281,7 @@ app.get('/author/:id', (req, res) => {
 });
 ```
 
-Here, we're requesting all the polls associated with a specific author. Pretty cool, right? 
+Here, we're requesting all the polls associated with a specific author with the line `where: { authorId: req.params.id },`. Pretty cool, right? 
 
 ### Add more polls
 Navigate into `src/polls.js`. You'll see we've already created some polls for you. 
@@ -295,16 +294,18 @@ Notice how `polls` was not a field in the model, but now it became one after the
 
 ## Summary / What you Learned
 
-* [ ] can be checkboxes
+* [ ] Learned how to create your own relational database
+* [ ] Learned the differences between relational/non-relational databases
+* [ ] Basics of postgreSQL
+* [ ] Basics of sequelize
 
 ## Reflection
 
 *2 questions for the workshop participants to answer (very short answer) when they submit the workshop. These should try to get at something core to the workshop, the what and the why.*
 
-* [ ] 2 reflection questions
-* [ ] 2 reflection questions
+* [ ] When would you use postgreSQL over mongoDB or firebase?
+* [ ] What are the downsides of using a relational database? What are the main differences between a relational and non-relational database?
 
 ## Resources
 * <https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8>
-
 
