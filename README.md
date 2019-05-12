@@ -550,7 +550,7 @@ Navigate into `src/polls.js`. You'll see we've already created some polls for yo
 
 Notice how `polls` was not a field in the model, but now it became one after the 'associate' part. Sequelize pluralized it from poll to polls by itself! WOWOWOW. ComputerSciencyyyy.
 
-## Part 4: 
+## Part 4 -- pgAdmin
 
 Cool stuff. Now that we have everything working, try playing around with the page in your browser now. Pay attention to what happens in the terminal window (the one running `yarn dev`).
 
