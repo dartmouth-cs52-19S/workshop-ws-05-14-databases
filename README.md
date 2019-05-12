@@ -114,70 +114,171 @@ First, we want to create a `author` model. Paste the following in `author.js`:
 
 ```
 const author = (sequelize, DataTypes) => {
-  const Author = sequelize.define('author', {
+ 
+
+  
+};
+
+export default author;
+```
+
+Now we're going to define our `author` model. First, we've defined the `author` model by using `sequelize.define`. Notice, the name is unique; we dont want to have different users with the same name. 
+```
+const Author = sequelize.define('author', {
+    name: {
+      type: DataTypes.STRING,
+      unique: true, 
+    },
+  });
+```
+
+Now we should have:
+```
+const author = (sequelize, DataTypes) => {
+ const Author = sequelize.define('author', {
     name: {
       type: DataTypes.STRING,
       unique: true, 
     },
   });
 
-  Author.associate = (models) => {
-    Author.hasMany(models.Poll, { onDelete: 'CASCADE' });
-  };
-
-  return Author;
+  
 };
 
 export default author;
 ```
-First, we've defined the `author` model. Notice, the name is unique; we can't have different users with the same name. 
 
 Next, we create an association by calling  `hasMany` providing the `poll` model as the first argument. We use `hasMany` because each author can write multiple polls. In creating associations, you can also use `hasOne`, `belongsTo`, and `belongsToMany`. The documentation can be found here: <http://docs.sequelizejs.com/class/lib/associations/base.js~Association.html>
+@Miho add your note about the onDelete: 'CASCADE' part here!!
+```
+Author.associate = (models) => {
+    Author.hasMany(models.Poll, { onDelete: 'CASCADE' });
+  };
+  return Author;
+```
+
+Now, your final author model should look like this: 
+
+<details>
+  <summary>Click to expand!</summary>
+  
+  ```
+  const author = (sequelize, DataTypes) => {
+   const Author = sequelize.define('author', {
+      name: {
+        type: DataTypes.STRING,
+        unique: true, 
+      },
+    });
+    Author.associate = (models) => {
+      Author.hasMany(models.Poll, { onDelete: 'CASCADE' });
+    };
+    return Author;
+  };
+
+  export default author;
+  ```
+</details>
 
 #### Part 2.2 -- Poll Model
 
-Now, let's create our 'poll' model. Paste the following in `poll.js`:
+Now, let's create our 'poll' model. Rock on.
 
+You don't need us for this, get coding!
+
+Right? 
+
+Okay, fine we'll help you out.
+
+Paste the following in `poll.js`:
 ```
 const poll = (sequelize, DataTypes) => {
-  const Poll = sequelize.define('poll', {
-    text: {
-      type: DataTypes.STRING,
-    },
-
-    imageURL: {
-      type: DataTypes.STRING,
-    },
-
-    upvotes: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-
-    downvotes: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-
-  }, {
-    getterMethods: {
-      score() { return this.upvotes - this.downvotes; },
-    },
-  });
-
-  Poll.associate = (models) => {
-    Poll.belongsTo(models.Author);
-  };
-
-  return Poll;
+  
+  
 };
 
 export default poll;
 ```
 
-Here, we're doing the same thing we did with the `author` model. We're defining the `poll` model with `text`, `imageURL`, `upvotes`, and `downvotes`. Notice, `upvotes` and `downvotes` have a default value of 0.
+Okay, same as before, let's define Poll using sequelize's define method.
+Paste the following inside 'poll' that we just made.
 
-Then, we associate the `poll` with an `author` using `associate` and `belongsTo`. 
+```
+const Poll = sequelize.define('poll', {
+   text: {
+     type: DataTypes.STRING,
+   },
+
+   imageURL: {
+     type: DataTypes.STRING,
+   },
+
+   upvotes: {
+     type: DataTypes.INTEGER,
+     defaultValue: 0,
+   },
+
+   downvotes: {
+     type: DataTypes.INTEGER,
+     defaultValue: 0,
+   },
+
+ }, {
+   getterMethods: {
+     score() { return this.upvotes - this.downvotes; },
+   },
+ });
+
+ return Poll;
+```
+WOAH that was a lot of code. Not at all! We did the same thing as before, defining our poll with `text`, `imageURL`, `upvotes`, and `downvotes`. We define the data type by setting `type: ` equal to STRING for a string and INTEGER for a number value. Notice, `upvotes` and `downvotes` have a default value of 0.
+
+Sweet! Now let's associate the `poll` with an `author` using the commands `associate` and `belongsTo` by placing this chunk of code after (or under) `getterMethods: `. In this portion, we are associating the Poll with the author of that specific poll.
+```
+Poll.associate = (models) => {
+    Poll.belongsTo(models.Author);
+  };
+```
+
+<details>
+  <summary>Click to expand!</summary>
+  
+  ```
+  const poll = (sequelize, DataTypes) => {
+    const Poll = sequelize.define('poll', {
+      text: {
+        type: DataTypes.STRING,
+      },
+
+      imageURL: {
+        type: DataTypes.STRING,
+      },
+
+      upvotes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+
+      downvotes: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+
+    }, {
+      getterMethods: {
+        score() { return this.upvotes - this.downvotes; },
+      },
+    });
+
+    Poll.associate = (models) => {
+      Poll.belongsTo(models.Author);
+    };
+
+    return Poll;
+  };
+  export default poll;
+  ```
+</details>
 
 ### Part 3 -- Setting up the API
 Now run `yarn dev` in terminal, then if you open up <http://localhost:9090/> in your browser, you should see the SA7 assignment. Now, let's fetch all the polls.
