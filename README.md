@@ -24,6 +24,8 @@ Your terminal should have spit out `==> Successfully started `postgresql` (label
 
 Alright, you CS GOD, now that PostgreSQL is running, let's connect to it.
 
+![](https://media.giphy.com/media/26BoEiQmzfg2rrkYg/giphy.gif)
+
 ## Step By Step
 ## PostgreSQL Command Prompt
 
