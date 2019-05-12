@@ -299,12 +299,14 @@ Notice how `polls` was not a field in the model, but now it became one after the
 * [ ] Basics of postgreSQL
 * [ ] Basics of sequelize
 
+## Extra Credit
+* Create a delete button on the output page and run a query to delete the posts by a specific author
+* Create a search bar and run a query to get all the post made by a specific author
+
 ## Reflection
 
-*2 questions for the workshop participants to answer (very short answer) when they submit the workshop. These should try to get at something core to the workshop, the what and the why.*
-
-* [ ] When would you use postgreSQL over mongoDB or firebase?
-* [ ] What are the downsides of using a relational database? What are the main differences between a relational and non-relational database?
+ 1. When would you use postgreSQL over mongoDB or firebase?
+ 2. What are the downsides of using a relational database? What are the main differences between a relational and non-relational database?
 
 ## Resources
 * <https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8>
