@@ -650,4 +650,9 @@ https://docs.google.com/presentation/d/135N0LlxpvDi1RCzaM-2bawaW82yWbCsNBO90cY46
 
 ## Resources
 * <https://blog.logrocket.com/setting-up-a-restful-api-with-node-js-and-postgresql-d96d6fc892d8>
+* <https://computer.howstuffworks.com/question599.htm>
+* <https://stackshare.io/sequelize>
+* <https://medium.com/@paigen11/sequelize-the-orm-for-sql-databases-with-nodejs-daa7c6d5aca3>
+* <https://milinaudara.wordpress.com/2014/05/24/an-introduction-to-sequelize-js/>
+
 
