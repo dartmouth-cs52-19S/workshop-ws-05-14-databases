@@ -47,7 +47,7 @@ You're now inside `psql` in the `postgres` database. The shell prompt becomes `p
 
 The prompt ends in `#` which tells us we're logged in as the absolute CS GOD superuser, or root. 
 
-Commands within `psql` start with a backlash. To see what database, user, and port we've connected to, run `\conninfo`. 
+Psql meta-commands that are processed by `psql` itself start with a backlash. To see what database, user, and port we've connected to, run `\conninfo`. 
 
 Here are some other commands:
 
@@ -64,16 +64,21 @@ PostgreSQL got us all like...
 
 ![](https://media.giphy.com/media/l0MYEqEzwMWFCg8rm/giphy.gif)
 
+
+Windows users, if you run into problems with the psql console, check out "Notes for Windows Users" in [PostgreSQL docs](https://www.postgresql.org/docs/9.0/app-psql.html). 
+
 ## Create a User and Log in
-We're gonna create a role called `me` (or whatever you wish) and give it a password `password` (or whatever you wish). According to the PostgreSQL documentation, "a role is an entity that can own database objects and have database privileges; a role can be considered a 'user', a 'group' or both depending on how it is used." In this case, we'll be using a role as a user. Run the following command:
+We're gonna create a role called `me` (or whatever you wish) and give it a password `password` (or whatever you wish). According to the PostgreSQL documentation, "a role is an entity that can own database objects and have database privileges; a role can be considered a 'user', a 'group' or both depending on how it is used." In this case, we'll be using a role as a user. Run the following command (it does not need a backslash since it is not a meta-command):
 
 `CREATE ROLE me WITH LOGIN PASSWORD 'password';`
+
+If the command is run correctly, you should see `CREATE ROLE` printed back to you. 
 
 We can use the command `ALTER ROLE` to change the attributes of a PostgreSQL role. We want to alter the role of `me` so that it can create other roles and new databases.
 
 `ALTER ROLE me CREATEDB;`
 
-If you now run `\du`, you should see something like this:
+If you now run `\du` (list all roles), you should see something like this:
 
 ```
                                    List of roles
@@ -98,7 +103,7 @@ Let's see it in the list!
 Cool. We're done with `psql` for now. Quit by typing `\q`.
 
 ## Sequelize 
-:rocket: If you haven't already, fork this repo, clone it, and cd into the directory. Run the following commands
+:rocket: If you haven't already, fork this repo, clone it, and cd into the directory. Run the following commands and read down to resolves any errors:
 
 ```
 yarn install
@@ -282,7 +287,7 @@ WOAH that was a lot of code. Not at all! We did the same thing as before, defini
 
 You'll notice that we have getterMethods on the model object, specifically one method called score. These is similar to those `virtuals` we used back with Mongoose.
 
-Sweet! Now let's associate the `poll` with an `author` using the commands `associate` and `belongsTo` by placing this chunk of code after `getterMethods:`. (line 27)
+Sweet! Now let's associate the `poll` with an `author` using the commands `associate` and `belongsTo` by placing this chunk of code after `getterMethods` (before `return Poll`):
 
 In this portion, we are associating the Poll with the author of that specific poll.
 ```
@@ -333,14 +338,18 @@ If you're really struggling, here's what the end result should be:
 </details>
 
 ### Part 3 -- Setting up the API
-Now run `yarn dev` in terminal, and if you open up <http://localhost:9090/> in your browser, will see that we need to handle some `routes`. :rocket: Let's fetch all the polls!
+Now run `yarn dev` in terminal, and if you open up <http://localhost:9090/> in your browser, you will see that we need to handle some `routes`. :rocket: Let's fetch all the polls!
 
 Open up `src/server.js` and add this to the top:
 
 ```
 import models, { sequelize } from './models';
 import createAuthorsWithPolls from './polls';
+```
 
+Beneath the first 'PART 3.1' comment, paste:
+
+```
 // sync Sequelize
 const eraseDatabaseOnSync = true;
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
@@ -357,7 +366,7 @@ By setting `eraseDatabaseOnSync` to `true`, we're essentially saying that we wan
 #### Part 3.1 -- GET all the posts
 This is basically the same as it was when we did SA7 with MongoDB. The syntax is a bit different, as we aren't using controllers. 
 
-We're adding the `author` to the model. Beneath the excessively gigantic 'PART 3.1' comment, add the following:
+We're adding the `author` to the model. Scroll down to the second excessively gigantic 'PART 3.1' comment, add the following:
 
 ```
 // default index route
@@ -425,7 +434,6 @@ models.Poll.create(
 Next, add this block under .then((poll). Here, we are creating the `poll` object with the information from the form users can fill out. We then `findOrCreate` the author they provided and link it to the poll. 
 
 ```
-.then((poll) => {
       // if there is no author with that name already, create one
       models.Author.findOrCreate({
         where: { name: req.body.author },
@@ -437,7 +445,6 @@ Next, add this block under .then((poll). Here, we are creating the `poll` object
         .then(() => {
           res.redirect('/');
         });
-    });
 
 ```
 :rocket: Finally, we redirect to the home page.
@@ -476,6 +483,8 @@ This is what you should end up with for the `POST /new` route!
     });
   ```
  </details>
+ 
+ Feel free to test that making a poll works before continuing! Expand your window if the new poll link is hidden.
 
 
 #### Part 3.3 -- POST for votes
@@ -501,6 +510,8 @@ app.post('/vote/:id', (req, res) => {
 Essentially, we are finding all the Polls with that id (primary key - aka `Pk`) from the URL. Should be only one, right.
 Then, we are using some predefined sequelize methods such as `increment` to change integer values without having to run `update` or `save` etc.
 
+However, we can't yet vote until we can get that author's poll. Go ahead and vote on your new poll and see what happens. 
+
 #### Part 3.4 -- GET author's posts
 
 Now that we've created a relational database associating authors with posts, we can request only the posts of a specific author. Add the following below the `PART 3.4' comment.
@@ -508,6 +519,7 @@ Now that we've created a relational database associating authors with posts, we 
 ```
 app.get('/author/:id', (req, res) => {
   models.Poll.findAll({
+  
     include: [{ model: models.Author }],
   })
     .then((polls) => {
@@ -540,6 +552,8 @@ where: { authorId: req.params.id },
   });
   ```
  </details>
+ 
+Now we should be able to vote on polls.
 
 Pretty cool, right? 
 
@@ -592,10 +606,10 @@ If you're on a Mac, you can download it straight from [here](https://ftp.postgre
 
 Let's set it up so we can connect to our `postgres` service!
 
-Inside the pgAdmin dashboard, click Add new Server.
-In the popup, name it whatever you want. We named it `Local`.
+Inside the pgAdmin dashboard under Quick Links, click Add New Server.
+In the popup, under the default General tab, name it whatever you want. We named it `Local`.
 
-In the connection tab of the popup, add `localhost` as the `Host name/address`.
+Switch to the Connection tab of the popup, and add `localhost` as the `Host name/address`.
 
 Port is `5432`. Username is, guess what, `postgres`, and the password is `password`.
 
@@ -603,7 +617,7 @@ This is what you should have:
 ![](img/pgadmin1.png)
 
 Click save and let's play around now! 
-You should see your dashboard change and have a bunch of weird charts.
+Click around in your server on the left dropdown. You should see your dashboard change and have a bunch of weird charts.
 
 
 ### Part 4.3
