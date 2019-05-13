@@ -654,5 +654,8 @@ https://docs.google.com/presentation/d/135N0LlxpvDi1RCzaM-2bawaW82yWbCsNBO90cY46
 * <https://stackshare.io/sequelize>
 * <https://medium.com/@paigen11/sequelize-the-orm-for-sql-databases-with-nodejs-daa7c6d5aca3>
 * <https://milinaudara.wordpress.com/2014/05/24/an-introduction-to-sequelize-js/>
+* <https://gist.github.com/zcaceres/742744b708393c022703b615d1bffbb1>
+* <https://www.robinwieruch.de/postgres-express-setup-tutorial/>
+* <http://docs.sequelizejs.com/>
 
 
