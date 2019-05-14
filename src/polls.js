@@ -52,7 +52,7 @@ const createAuthorsWithPolls = async () => {
           downvotes: 100000, // HA HA
         },
         {
-          text: 'Who thinks Ryoya is handsome?',
+          text: 'Would you be friends with Ryoya?',
           imageURL: 'https://scontent.fzty2-1.fna.fbcdn.net/v/t1.0-9/53639368_2115234888569250_3121588415485706240_o.jpg?_nc_cat=111&_nc_ht=scontent.fzty2-1.fna&oh=e9d708fc68d5d313040d2215118bf232&oe=5D5984DA',
           upvotes: 1,
           downvotes: 200000, // HA HA
