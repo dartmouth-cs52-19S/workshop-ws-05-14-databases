@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
+import models, { sequelize } from './models';
+import createAuthorsWithPolls from './polls';
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░█▀█▐▀█░▐▀▀▌░▀█▀░░▀▀▀▌░░░▌░░
@@ -12,6 +14,13 @@ import morgan from 'morgan';
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // sync Sequelize
 
+// sync Sequelize
+const eraseDatabaseOnSync = true;
+sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
+  if (eraseDatabaseOnSync) {
+    createAuthorsWithPolls();
+  }
+});
 
 // initialize
 const app = express();
@@ -48,6 +57,18 @@ app.get('/new', (req, res) => {
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // DEFAULT INDEX ROUTE
 
+// default index route
+app.get('/', (req, res) => {
+  models.Poll.findAll({
+    include: [{ model: models.Author }],
+  })
+    .then((polls) => {
+      res.render('index', { polls });
+    }).catch((error) => {
+      res.send(`error: ${error}`);
+    });
+});
+
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░█▀█▐▀█░▐▀▀▌░▀█▀░░▀▀▀▌░░░▀▀▌░░
@@ -56,7 +77,31 @@ app.get('/new', (req, res) => {
 // ░░▌░░▐░▐░▐░░▌░░▌░░░▄▄▄▌█░░█▄▄░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // POST /new
+app.post('/new', (req, res) => {
+  const newpoll = {
+    text: req.body.text,
+    imageURL: req.body.imageURL,
+  };
 
+  models.Poll.create(
+    newpoll, {
+      include: [{ model: models.Author }],
+    },
+  )
+    .then((poll) => {
+      // if there is no author with that name already, create one
+      models.Author.findOrCreate({
+        where: { name: req.body.author },
+      })
+        .then((author) => {
+          poll.setAuthor(author[0]); // findOrCreate returns an array, so we just need the first one
+          poll.save(); // finally update the object with the new association
+        })
+        .then(() => {
+          res.redirect('/');
+        });
+    });
+});
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░█▀█▐▀█░▐▀▀▌░▀█▀░░▀▀▀▌░░▀▀▌░░
@@ -65,7 +110,19 @@ app.get('/new', (req, res) => {
 // ░░▌░░▐░▐░▐░░▌░░▌░░░▄▄▄▌█░▄▄▌░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // POST vote/:id
+app.post('/vote/:id', (req, res) => {
+  const vote = (req.body.vote === 'up');
 
+  models.Poll.findByPk(req.params.id).then((poll) => {
+    console.log(`updating vote: ${poll} ${vote}`);
+    if (vote) {
+      poll.increment('upvotes');
+    } else {
+      poll.increment('downvotes');
+    }
+    res.send(poll);
+  });
+});
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // ░░█▀█▐▀█░▐▀▀▌░▀█▀░░▀▀▀▌░░▌░▌░░░
@@ -74,6 +131,17 @@ app.get('/new', (req, res) => {
 // ░░▌░░▐░▐░▐░░▌░░▌░░░▄▄▄▌█░░░▌░░░
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // GET author's posts
+app.get('/author/:id', (req, res) => {
+  models.Poll.findAll({
+    where: { authorId: req.params.id },
+    include: [{ model: models.Author }],
+  })
+    .then((polls) => {
+      res.render('index', { polls });
+    }).catch((error) => {
+      res.send(`error: ${error}`);
+    });
+});
 
 // START THE SERVER
 // =============================================================================
