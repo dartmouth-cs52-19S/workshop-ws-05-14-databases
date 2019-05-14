@@ -63,5 +63,6 @@ const createAuthorsWithPolls = async () => {
       include: [models.Poll],
     },
   );
+}
 
 export default createAuthorsWithPolls;
