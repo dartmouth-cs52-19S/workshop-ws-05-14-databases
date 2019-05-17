@@ -5,7 +5,7 @@
 *Don't you want to know how to store your own data, other people's data, all kinds of data? When you read the word data, do you say data or data????? Are you mad that you read that two different ways?*
 
 ## Overview
-In this workshop, we're going to rebuild our SA7 assignment. In case you don't remember, that's the lab with polls and upvotes/downvotes. Instead of using MongoDB and Mongoose, we're going to use PostgreSQL and Sequelize! You will learn how to install PostgreSQL and work with it through the command line interface. Then, we'll use Sequelize, a promise-based ORM (Object Relation Mapping) for Node.js. 
+In this workshop, we're going to rebuild our SA7 assignment. In case you don't remember, that's the lab with polls and upvotes/downvotes. Instead of using MongoDB and Mongoose, we're going to use PostgreSQL and Sequelize! You will learn how to install PostgreSQL and work with it through the command line interface. Then, we'll use Sequelize, a promise-based ORM (Object Relation Mapping) for Node.js. Nice! 
 
 ## Setup
 ### :sweat_drops:What the hell is PostgreSQL?:sweat_drops:
